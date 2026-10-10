@@ -1,0 +1,3 @@
+# Şirket içi (on-prem) kurulum profili: tek müşteri (tek kiracı), müşterinin kendi sunucusunda çalışır.
+burever:
+  dagitim-profili: onprem

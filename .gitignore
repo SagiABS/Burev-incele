@@ -1,0 +1,28 @@
+# Maven çıktıları
+target/
+.flattened-pom.xml
+
+# IDE dosyaları
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Vaadin ön yüz (otomatik üretilen)
+node_modules/
+node/
+frontend/generated/
+vite.generated.ts
+vite.config.ts
+package.json
+package-lock.json
+tsconfig.json
+types.d.ts
+src/main/bundles/
+
+# Yerel gizli ayarlar (depoya eklenmez)
+ops/.env
+*.log
+.DS_Store

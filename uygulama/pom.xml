@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  uygulama: Çalıştırılabilir ana uygulama.
+
+  Görevi:
+   - Tüm modülleri tek Spring Boot uygulamasında birleştirir.
+   - Şimdilik "dikey dilim" kanıtıdır: giriş sayfası (Vaadin) + tek REST uç noktası + veritabanı bağlantısı.
+
+  Lisans notu: yalnızca vaadin-spring-boot-starter kullanılır; ticari artefaktlar BİLEREK eklenmemiştir.
+  Starter'ın tam olarak neleri çektiği "mvn dependency:tree" ile doğrulanmalıdır.
+  Güvenlik (Spring Security), JPA, jOOQ, Mail, springdoc: ilgili paketler açılınca eklenecek.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.burevers</groupId>
+        <artifactId>burever</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>burever-uygulama</artifactId>
+    <name>Burever - Uygulama</name>
+    <description>Ana çalıştırıcı: tüm modülleri birleştirir</description>
+
+    <dependencies>
+        <!-- Kendi modüllerimiz -->
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-cekirdek</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-tem</artifactId>
+        </dependency>
+
+        <!-- Web (REST) katmanı. Boot 4'te starter adı "webmvc"dir -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <!-- Sağlık ve izleme uç noktaları (/actuator/health) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Veritabanı: JDBC bağlantısı, Flyway göçleri, PostgreSQL sürücüsü -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Kullanıcı arayüzü: Vaadin (ücretsiz çekirdek bileşenler) -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- Çalıştırılabilir jar'ı "exec" sınıflandırıcısıyla üretir; normal jar korunur,
+                                 böylece mimari-testler bu modülün sınıflarını okuyabilir -->
+                            <goal>repackage</goal>
+                            <!-- Sürüm bilgisini (BuildProperties) üretir; /api/v1/sistem/bilgi kullanır -->
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Vaadin ön yüz dosyalarını hazırlar (geliştirme için) -->
+            <plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.version}</version>
+                <executions>
+                    <execution>
+                        <id>on-yuz-hazirlik</id>
+                        <goals>
+                            <goal>prepare-frontend</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Üretim paketi: mvn -Pproduction package. Ön yüzü derleyip paketler (yavaş, ağ gerekir) -->
+        <profile>
+            <id>production</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>vaadin-maven-plugin</artifactId>
+                        <version>${vaadin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>on-yuz-uretim-derlemesi</id>
+                                <goals>
+                                    <goal>build-frontend</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

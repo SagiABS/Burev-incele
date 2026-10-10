@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  mimari-testler: Mimari kural testleri.
+
+  Görevi: Projenin mimari kararlarını (ADR) kod olarak denetler. Kural ihlali derlemeyi kırar.
+  Bu modül yalnızca test içerir; modüllerin sınıflarını görebilmek için hepsine bağımlıdır.
+  Yeni modül (bel, muh, mht) açıldığında buraya bağımlılık olarak eklenir.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.burevers</groupId>
+        <artifactId>burever</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>burever-mimari-testler</artifactId>
+    <name>Burever - Mimari testler</name>
+    <description>ArchUnit ile mimari kuralların otomatik denetimi</description>
+
+    <dependencies>
+        <!-- Denetlenecek modüller -->
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-cekirdek</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-tem</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-uygulama</artifactId>
+        </dependency>
+
+        <!-- Test araçları -->
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

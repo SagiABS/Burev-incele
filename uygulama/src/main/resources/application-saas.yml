@@ -1,0 +1,4 @@
+# SaaS (ortak) kurulum profili: birden fazla müşteri (kiracı) aynı uygulamayı kullanır.
+# Kiracı izolasyonu ayarları ilgili paketler açılınca buraya eklenecek.
+burever:
+  dagitim-profili: saas
