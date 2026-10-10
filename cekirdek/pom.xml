@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  cekirdek: Ortak çekirdek modül.
+
+  Kural: Bu modül HİÇBİR çatıya (Spring, JPA, Vaadin) bağımlı olmaz; yalnızca saf Java içerir.
+  Bu kural testler/mimari-testler modülünde otomatik denetlenir.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.burevers</groupId>
+        <artifactId>burever</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>burever-cekirdek</artifactId>
+    <name>Burever - Çekirdek</name>
+    <description>Ortak çekirdek: Money ve ortak tipler (saf Java)</description>
+
+    <dependencies>
+        <!-- Yalnızca test bağımlılıkları: çekirdek çalışma zamanında hiçbir şeye bağımlı değildir -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

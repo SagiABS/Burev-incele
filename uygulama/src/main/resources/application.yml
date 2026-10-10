@@ -1,0 +1,29 @@
+# Burever - ortak uygulama ayarları
+# Gizli bilgiler (veritabanı şifresi) DOSYAYA YAZILMAZ; ortam değişkeniyle verilir.
+#
+#   BUREVER_DB_URL        (varsayılan: jdbc:postgresql://localhost:5432/dburevers)
+#   BUREVER_DB_KULLANICI  (varsayılan: dburtest)
+#   BUREVER_DB_SIFRE      (ZORUNLU; varsayılanı yoktur)
+
+spring:
+  application:
+    name: burever
+  profiles:
+    # Profil verilmezse şirket içi kurulum varsayılır (ADR-17). SaaS için: --spring.profiles.active=saas
+    default: onprem
+  datasource:
+    url: ${BUREVER_DB_URL:jdbc:postgresql://localhost:5432/dburevers}
+    username: ${BUREVER_DB_KULLANICI:dburtest}
+    password: ${BUREVER_DB_SIFRE}
+  flyway:
+    enabled: true
+    # Her modül kendi göçlerini db/migration/<modul>/ altında tutar; Flyway alt klasörleri de tarar.
+    # Henüz göç dosyası yoktur (tablo adları kullanıcıyla birlikte kararlaştırılınca eklenecek).
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Dışarıya yalnızca sağlık ve bilgi uç noktaları açılır
+        include: health,info

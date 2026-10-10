@@ -1,0 +1,25 @@
+# Sürekli entegrasyon: her push ve çekme isteğinde derler ve tüm testleri (mimari testler dahil) çalıştırır.
+name: CI
+
+on:
+  push:
+    branches: [burev-proje]
+  pull_request:
+
+jobs:
+  derle-ve-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu al
+        uses: actions/checkout@v4
+
+      - name: Java 25 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven            # Maven bağımlılıklarını önbelleğe alır, derlemeyi hızlandırır
+
+      # verify: derle + birim testleri + mimari testler (veritabanı gerekmez)
+      - name: Derle ve test et
+        run: mvn -B verify

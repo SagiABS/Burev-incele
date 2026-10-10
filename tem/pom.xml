@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  tem: Temel modül (organizasyon, kuruluş, tesis, kullanıcı, menü, yetki, para/ölçü birimi, kilit...).
+
+  Şu an BOŞTUR: paket ve tablo adları kullanıcıyla birlikte karar verildikten sonra açılacak.
+  Java paketleri bu modülde doğrudan com.burevers.bur.<paketkodu> biçiminde olacak (örn. temorg).
+  Bağımlılık yönü: tem hiçbir iş modülüne (bel, muh, mht) bağımlı olamaz.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.burevers</groupId>
+        <artifactId>burever</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>burever-tem</artifactId>
+    <name>Burever - tem (Temel)</name>
+    <description>Temel tanımlar modülü (şimdilik boş)</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-cekirdek</artifactId>
+        </dependency>
+    </dependencies>
+</project>
