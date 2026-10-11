@@ -72,6 +72,14 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-spring-boot-starter</artifactId>
         </dependency>
+        <!-- Vaadin geliştirme sunucusu: geliştirme modunda (spring-boot:run) ön yüzü canlı derler.
+             Bu olmadan uygulama "vaadin-dev-server not found" hatasıyla açılmaz.
+             optional=true: üretim paketine (production profili) girmez, bağımlı modüllere geçmez. -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
