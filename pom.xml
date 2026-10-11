@@ -95,6 +95,19 @@
 
     <build>
         <plugins>
+            <!-- Test dosyası adları: Maven varsayılanı yalnızca *Test ve *Tests sonekini tanır.
+                 Türkçe adlandırmada kullandığımız *Testi soneki de eklenir; yoksa bu testler SESSİZCE ÇALIŞMAZ. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                        <include>**/*Testi.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
             <!-- Yanlış Java/Maven sürümüyle derlemeyi baştan durdurur -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

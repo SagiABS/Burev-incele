@@ -89,6 +89,9 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <!-- id "repackage": Spring Boot parent'ının kendi repackage çalıştırmasıyla BİRLEŞİR.
+                             Yoksa parent normal jar'ı da "fat jar"a çevirir ve mimari testler sınıfları göremez. -->
+                        <id>repackage</id>
                         <goals>
                             <!-- Çalıştırılabilir jar'ı "exec" sınıflandırıcısıyla üretir; normal jar korunur,
                                  böylece mimari-testler bu modülün sınıflarını okuyabilir -->
