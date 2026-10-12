@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 /**
  * TemorgmdeEntity - temorgmde tablosunun JPA sınıfı (varlık).
- * Ne işe yarar: organizasyon ek alan tanımı: bir tabloya yöneticinin eklediği dinamik alanın adı, başlığı, türü ve zorunluluğu.
+ * Ne işe yarar: organizasyon ek alan tanımı: bir tabloya yöneticinin eklediği dinamik alanın adı, başlığı, türü, zorunluluğu ve geçerlilik kapsamı (organizasyon / kuruluş / tesis).
  * Neden var: veritabanı satırını Java nesnesi olarak okuyup yazabilmek için.
  * Not: ortak alanlar (vid, pasif, oluşturma/güncelleme izi) üst sınıflardan gelir.
  */
@@ -38,10 +38,20 @@ public class TemorgmdeEntity extends TemortPasifEntity {
     @Column(name = "zorunlumu", nullable = false)
     private boolean zorunluMu;
 
-    /** Yalnızca bu organizasyonda geçerli; boşsa tümünde. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orgvid")
+    /** Tanımın ait olduğu organizasyon (zorunlu). Tek başına seçilirse tüm kuruluş ve tesislerde geçerlidir. */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "orgvid", nullable = false)
     private TemorgorgEntity organizasyon;
+
+    /** İsteğe bağlı kuruluş: seçilirse tanım yalnızca bu kuruluşun tüm tesislerinde geçerlidir. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kurvid")
+    private TemorgkurEntity kurulus;
+
+    /** İsteğe bağlı tesis: seçilirse (kuruluş da dolu olmalı) tanım yalnızca bu tesiste geçerlidir. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tesvid")
+    private TemorgtesEntity tesis;
 
     /** Ek alanın ekleneceği tablo kodu. */
     public String getTabloKodu() {
@@ -93,13 +103,33 @@ public class TemorgmdeEntity extends TemortPasifEntity {
         this.zorunluMu = zorunluMu;
     }
 
-    /** Yalnızca bu organizasyonda geçerli; boşsa tümünde. */
+    /** Tanımın ait olduğu organizasyon. */
     public TemorgorgEntity getOrganizasyon() {
         return organizasyon;
     }
 
-    /** Yalnızca bu organizasyonda geçerli; boşsa tümünde. */
+    /** Tanımın ait olduğu organizasyon. */
     public void setOrganizasyon(TemorgorgEntity organizasyon) {
         this.organizasyon = organizasyon;
+    }
+
+    /** Kapsamdaki kuruluş (boş olabilir). */
+    public TemorgkurEntity getKurulus() {
+        return kurulus;
+    }
+
+    /** Kapsamdaki kuruluş (boş olabilir). */
+    public void setKurulus(TemorgkurEntity kurulus) {
+        this.kurulus = kurulus;
+    }
+
+    /** Kapsamdaki tesis (boş olabilir). */
+    public TemorgtesEntity getTesis() {
+        return tesis;
+    }
+
+    /** Kapsamdaki tesis (boş olabilir). */
+    public void setTesis(TemorgtesEntity tesis) {
+        this.tesis = tesis;
     }
 }
