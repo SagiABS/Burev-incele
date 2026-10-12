@@ -33,6 +33,8 @@
         <module>cekirdek</module>
         <!-- tem: temel tanımlar (organizasyon, kuruluş, tesis, kullanıcı, menü, yetki...) -->
         <module>tem</module>
+        <!-- mht: muhatap modülü (cari kartlar, adres/iletişim/rol ilişkileri); yalnızca tem'e bağımlı -->
+        <module>mht</module>
         <!-- uygulama: tüm modülleri birleştiren çalıştırılabilir Spring Boot uygulaması -->
         <module>uygulama</module>
         <!-- Mimari kuralların testi (ArchUnit) -->
@@ -77,6 +79,11 @@
             <dependency>
                 <groupId>com.burevers</groupId>
                 <artifactId>burever-tem</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.burevers</groupId>
+                <artifactId>burever-mht</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
