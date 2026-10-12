@@ -164,4 +164,76 @@ class MimariKuralTesti {
                 .allowEmptyShould(true)
                 .check(siniflar);
     }
+
+    /**
+     * Tablo ve entity adlandırması: her @Entity sınıfının @Table adı geçerli tablo koduna (paket kodu + 3-4 harf,
+     * en çok 10 karakter) uymalı, sınıf adı tablo kodunun baş harfi büyük hâli + "Entity" olmalı ve sınıf,
+     * tablo kodunun ilk 6 karakteriyle adlanan pakette bulunmalıdır.
+     */
+    @Test
+    void tabloVeEntityAdlandirmasiKorunur() {
+        ArchCondition<JavaClass> kural = new ArchCondition<>(
+                "tablo kodu, sınıf adı ve paket adı birbiriyle uyumlu olmalı") {
+            @Override
+            public void check(JavaClass sinif, ConditionEvents olaylar) {
+                String tablo = sinif.tryGetAnnotationOfType("jakarta.persistence.Table")
+                        .map(a -> String.valueOf(a.getProperties().get("name")))
+                        .orElse("");
+                boolean tabloUygun = tablo.matches(MimariSabitleri.TABLO_KODU_DESENI);
+                boolean sinifUygun = tabloUygun
+                        && sinif.getSimpleName().equals(Character.toUpperCase(tablo.charAt(0)) + tablo.substring(1) + "Entity");
+                boolean paketUygun = tabloUygun
+                        && sinif.getPackageName().equals(MimariSabitleri.KOK_PAKET + "." + tablo.substring(0, 6));
+                olaylar.add(new SimpleConditionEvent(sinif, tabloUygun && sinifUygun && paketUygun,
+                        sinif.getName() + ": tablo='" + tablo + "' kurala uymuyor (tablo kodu deseni, sınıf adı = Tablo+Entity, paket = ilk 6 karakter)"));
+            }
+        };
+
+        classes().that().areAnnotatedWith("jakarta.persistence.Entity")
+                .should(kural)
+                .allowEmptyShould(true)
+                .check(siniflar);
+    }
+
+    /**
+     * Sınıf soneki: alan modüllerinin paketlerindeki (temort, temorg, mhtlev...) her üst düzey sınıf,
+     * paket kodunun baş harfi büyük hâliyle başlamalı ve izin verilen standart sonekle bitmelidir
+     * (Entity, Repository, Service, View, Dialog, Controller, Dto, Validator, Event). Ortak taban sınıflar muaftır.
+     */
+    @Test
+    void sinifSoneklerineUyulur() {
+        ArchCondition<JavaClass> kural = new ArchCondition<>(
+                "paket kodu ile başlamalı ve izin verilen standart sonekle bitmeli") {
+            @Override
+            public void check(JavaClass sinif, ConditionEvents olaylar) {
+                String onEk = MimariSabitleri.KOK_PAKET + ".";
+                String paket = sinif.getPackageName();
+                if (!paket.startsWith(onEk) || sinif.isNestedClass() || sinif.isAnonymous()) {
+                    return;
+                }
+                String ilkParca = paket.substring(onEk.length());
+                if (ilkParca.contains(".")) {
+                    ilkParca = ilkParca.substring(0, ilkParca.indexOf('.'));
+                }
+                if (!ilkParca.matches(MimariSabitleri.PAKET_KODU_DESENI)) {
+                    return; // cekirdek/uygulama gibi özel paketler bu kurala tabi değildir
+                }
+                String ad = sinif.getSimpleName();
+                if (MimariSabitleri.TABAN_SINIFLAR.contains(ad)) {
+                    return;
+                }
+                String paketOnEki = Character.toUpperCase(ilkParca.charAt(0)) + ilkParca.substring(1);
+                boolean sonekUygun = MimariSabitleri.SINIF_SONEKLERI.stream()
+                        .anyMatch(sonek -> ad.endsWith(sonek) && ad.length() > paketOnEki.length() + sonek.length());
+                boolean uygun = ad.startsWith(paketOnEki) && sonekUygun;
+                olaylar.add(new SimpleConditionEvent(sinif, uygun,
+                        sinif.getName() + " adı kurala uymuyor: '" + paketOnEki + "' ile başlamalı, sonek: "
+                                + MimariSabitleri.SINIF_SONEKLERI));
+            }
+        };
+
+        classes().should(kural)
+                .allowEmptyShould(true)
+                .check(siniflar);
+    }
 }

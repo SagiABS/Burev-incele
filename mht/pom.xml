@@ -22,7 +22,7 @@
     <description>Muhatap modülü</description>
 
     <dependencies>
-        <!-- tem: ortak taban sınıflar (TemortPasifVrl) ve JPA bağımlılıkları buradan gelir -->
+        <!-- tem: ortak taban sınıflar (TemortPasifEntity) ve JPA bağımlılıkları buradan gelir -->
         <dependency>
             <groupId>com.burevers</groupId>
             <artifactId>burever-tem</artifactId>
