@@ -2,7 +2,8 @@
 <!--
   tem: Temel modül (organizasyon, kuruluş, tesis, kullanıcı, menü, yetki, para/ölçü birimi, kilit...).
 
-  Şu an BOŞTUR: paket ve tablo adları kullanıcıyla birlikte karar verildikten sonra açılacak.
+  İlk paketler: temort (ortak tanımlar: etiket, para birimi) ve temorg (organizasyon, kuruluş, tesis).
+  Paketler ve tablolar kullanıcıyla birlikte karar verildikçe eklenir.
   Java paketleri bu modülde doğrudan com.burevers.bur.<paketkodu> biçiminde olacak (örn. temorg).
   Bağımlılık yönü: tem hiçbir iş modülüne (bel, muh, mht) bağımlı olamaz.
 -->
@@ -20,9 +21,14 @@
 
     <artifactId>burever-tem</artifactId>
     <name>Burever - tem (Temel)</name>
-    <description>Temel tanımlar modülü (şimdilik boş)</description>
+    <description>Temel tanımlar modülü</description>
 
     <dependencies>
+        <!-- JPA (Hibernate) + Spring Data: varlık ve repository sınıfları için -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.burevers</groupId>
             <artifactId>burever-cekirdek</artifactId>
