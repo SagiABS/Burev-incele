@@ -36,6 +36,10 @@
             <groupId>com.burevers</groupId>
             <artifactId>burever-tem</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-mht</artifactId>
+        </dependency>
 
         <!-- Web (REST) katmanı. Boot 4'te starter adı "webmvc"dir -->
         <dependency>

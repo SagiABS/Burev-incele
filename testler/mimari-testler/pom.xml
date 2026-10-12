@@ -34,6 +34,10 @@
         </dependency>
         <dependency>
             <groupId>com.burevers</groupId>
+            <artifactId>burever-mht</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.burevers</groupId>
             <artifactId>burever-uygulama</artifactId>
         </dependency>
 

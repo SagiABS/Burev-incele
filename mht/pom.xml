@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  mht: Muhatap modülü (muhatap kartları, adres/iletişim/rol/grup/belge ilişkileri, kuruluşlar arası ilişkiler).
+
+  Java paketleri doğrudan com.burevers.bur.<paketkodu> biçimindedir (örn. mhttem, mhtlev).
+  Bağımlılık yönü: mht yalnızca tem'e (ve çekirdeğe) bağımlı olabilir; bel ve muh'a bağımlı olamaz.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.burevers</groupId>
+        <artifactId>burever</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>burever-mht</artifactId>
+    <name>Burever - mht (Muhatap)</name>
+    <description>Muhatap modülü</description>
+
+    <dependencies>
+        <!-- tem: ortak taban sınıflar (TemortPasifVrl) ve JPA bağımlılıkları buradan gelir -->
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-tem</artifactId>
+        </dependency>
+    </dependencies>
+</project>
