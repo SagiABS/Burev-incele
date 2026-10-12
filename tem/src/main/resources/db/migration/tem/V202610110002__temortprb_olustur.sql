@@ -12,7 +12,7 @@ CREATE TABLE temortprb (
     -- Pasif yapma bilgisi: üçü birlikte dolu (pasif) ya da üçü birlikte boş (aktif) olmalı
     pasif          BOOLEAN      NOT NULL DEFAULT FALSE,
     pasiftarihi    DATE,
-    pasifnedeni    VARCHAR(10),
+    pasifnedeni    VARCHAR(10),             -- ileride neden tablosuna yabancı anahtar olacak
     -- Oluşturma / güncelleme izi
     c_kullanici    VARCHAR(30)  NOT NULL,
     c_tarih        DATE         NOT NULL,

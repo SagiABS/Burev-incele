@@ -15,11 +15,11 @@ import java.time.LocalDate;
 public class TemortetkVrl extends TemortPasifVrl {
 
     /** Etiketin ait olduğu tablo kodu (sistem referansı). */
-    @Column(name = "dbtablosu", length = 9, nullable = false)
+    @Column(name = "dbtablosu", length = 10, nullable = false)
     private String dbTablosu;
 
-    /** Etiket kodu (3 karakter). */
-    @Column(name = "etiketkodu", length = 3, nullable = false)
+    /** Etiket kodu (en çok 4 karakter). */
+    @Column(name = "etiketkodu", length = 4, nullable = false)
     private String etiketKodu;
 
     /** Etiket adı. */
@@ -30,7 +30,7 @@ public class TemortetkVrl extends TemortPasifVrl {
     @Column(name = "etkgrubu", length = 10)
     private String etkGrubu;
 
-    /** Alfabetik tanım. */
+    /** Alternatif tanım. */
     @Column(name = "alftanimi", length = 100)
     private String alfTanimi;
 
@@ -52,12 +52,12 @@ public class TemortetkVrl extends TemortPasifVrl {
         this.dbTablosu = dbTablosu;
     }
 
-    /** Etiket kodu (3 karakter). */
+    /** Etiket kodu (en çok 4 karakter). */
     public String getEtiketKodu() {
         return etiketKodu;
     }
 
-    /** Etiket kodu (3 karakter). */
+    /** Etiket kodu (en çok 4 karakter). */
     public void setEtiketKodu(String etiketKodu) {
         this.etiketKodu = etiketKodu;
     }
@@ -82,12 +82,12 @@ public class TemortetkVrl extends TemortPasifVrl {
         this.etkGrubu = etkGrubu;
     }
 
-    /** Alfabetik tanım. */
+    /** Alternatif tanım. */
     public String getAlfTanimi() {
         return alfTanimi;
     }
 
-    /** Alfabetik tanım. */
+    /** Alternatif tanım. */
     public void setAlfTanimi(String alfTanimi) {
         this.alfTanimi = alfTanimi;
     }

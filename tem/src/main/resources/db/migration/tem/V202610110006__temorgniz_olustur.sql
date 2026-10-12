@@ -9,11 +9,11 @@ CREATE TABLE temorgniz (
     orgvid         BIGINT       NOT NULL REFERENCES temorgorg (vid),
     kurvid         BIGINT       NOT NULL REFERENCES temorgkur (vid),
     tesvid         BIGINT       NOT NULL REFERENCES temorgtes (vid),
-    etiket         VARCHAR(3),              -- temortetk etiket kodu; FK yok, servis katmanı doğrular
+    etiket         VARCHAR(4),              -- temortetk etiket kodu; FK yok, servis katmanı doğrular
     acilistarihi   DATE         NOT NULL,
     pasif          BOOLEAN      NOT NULL DEFAULT FALSE,
     pasiftarihi    DATE,
-    pasifnedeni    VARCHAR(10),
+    pasifnedeni    VARCHAR(10),             -- ileride neden tablosuna yabancı anahtar olacak
     c_kullanici    VARCHAR(30)  NOT NULL,
     c_tarih        DATE         NOT NULL,
     c_saat         TIME         NOT NULL,

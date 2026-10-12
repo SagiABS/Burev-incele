@@ -36,7 +36,7 @@ public class TemorgkurVrl extends TemortPasifVrl {
     private Short donemi;
 
     /** Etiket kodu (temortetk); doğrulama servis katmanında. */
-    @Column(name = "etiket", length = 3)
+    @Column(name = "etiket", length = 4)
     private String etiket;
 
     /** Açılış tarihi. */

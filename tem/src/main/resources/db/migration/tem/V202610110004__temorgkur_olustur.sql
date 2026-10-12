@@ -6,12 +6,12 @@ CREATE TABLE temorgkur (
     adikisa        VARCHAR(50),
     vergino        VARCHAR(30),
     donemi         SMALLINT,                -- dönem başlangıç ayı (1-12)
-    etiket         VARCHAR(3),              -- temortetk etiket kodu; FK yok, servis katmanı doğrular
+    etiket         VARCHAR(4),              -- temortetk etiket kodu; FK yok, servis katmanı doğrular
     acilistarihi   DATE         NOT NULL,
     -- Pasif yapma bilgisi: üçü birlikte dolu (pasif) ya da üçü birlikte boş (aktif) olmalı
     pasif          BOOLEAN      NOT NULL DEFAULT FALSE,
     pasiftarihi    DATE,
-    pasifnedeni    VARCHAR(10),
+    pasifnedeni    VARCHAR(10),             -- ileride neden tablosuna yabancı anahtar olacak
     -- Oluşturma / güncelleme izi
     c_kullanici    VARCHAR(30)  NOT NULL,
     c_tarih        DATE         NOT NULL,
