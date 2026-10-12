@@ -18,8 +18,13 @@ spring:
   flyway:
     enabled: true
     # Her modül kendi göçlerini db/migration/<modul>/ altında tutar; Flyway alt klasörleri de tarar.
-    # Henüz göç dosyası yoktur (tablo adları kullanıcıyla birlikte kararlaştırılınca eklenecek).
     locations: classpath:db/migration
+  jpa:
+    hibernate:
+      # Tabloları yalnızca Flyway göçleri yönetir; Hibernate sadece JPA sınıfı - tablo uyumunu denetler
+      ddl-auto: validate
+    # Web isteği bittikten sonra veritabanı oturumu açık tutulmaz (gizli yavaşlıkları önler)
+    open-in-view: false
 
 management:
   endpoints:
