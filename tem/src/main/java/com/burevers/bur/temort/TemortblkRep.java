@@ -1,15 +1,15 @@
-package com.burevers.bur.temorg;
+package com.burevers.bur.temort;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * TemorgblkRep - TemorgblkVrl için veri erişim arayüzü.
+ * TemortblkRep - TemortblkVrl için veri erişim arayüzü.
  * Ne işe yarar: bloke kayıtlarını bulur, ekler, günceller; bir karta ait blokeleri getirir.
  * Neden var: Spring Data gerçek uygulamayı kendisi üretir; elle SQL/JDBC kodu yazılmaz.
  */
-public interface TemorgblkRep extends JpaRepository<TemorgblkVrl, Long> {
+public interface TemortblkRep extends JpaRepository<TemortblkVrl, Long> {
 
     /** Bir kartın (tablo kodu + kayıt vid) bütün bloke kayıtlarını getirir. */
-    List<TemorgblkVrl> findByTabloKoduAndKayitVid(String tabloKodu, Long kayitVid);
+    List<TemortblkVrl> findByTabloKoduAndKayitVid(String tabloKodu, Long kayitVid);
 }

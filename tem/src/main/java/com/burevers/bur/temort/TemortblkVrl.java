@@ -1,23 +1,19 @@
-package com.burevers.bur.temorg;
+package com.burevers.bur.temort;
 
-import com.burevers.bur.temort.TemortPasifVrl;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 
 /**
- * TemorgblkVrl - temorgblk tablosunun JPA sınıfı (varlık).
+ * TemortblkVrl - temortblk tablosunun JPA sınıfı (varlık).
  * Ne işe yarar: tüm modüller için ortak bloke (kilit) kaydı; tablokodu + kayitvid hedef kartı gösterir (yabancı anahtar yok).
  * Neden var: veritabanı satırını Java nesnesi olarak okuyup yazabilmek için.
  * Not: ortak alanlar (vid, pasif, oluşturma/güncelleme izi) üst sınıflardan gelir.
  */
 @Entity
-@Table(name = "temorgblk")
-public class TemorgblkVrl extends TemortPasifVrl {
+@Table(name = "temortblk")
+public class TemortblkVrl extends TemortPasifVrl {
 
     /** Bloke edilen kartın tablo kodu (örn. mhtlevmuf). */
     @Column(name = "tablokodu", length = 10, nullable = false)
@@ -27,20 +23,17 @@ public class TemorgblkVrl extends TemortPasifVrl {
     @Column(name = "kayitvid", nullable = false)
     private Long kayitVid;
 
-    /** Kilidin geçerli olduğu organizasyon (boş olabilir). */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orgvid")
-    private TemorgorgVrl organizasyon;
+    /** Kilidin geçerli olduğu organizasyonun vid'i (temorgorg; boş olabilir). */
+    @Column(name = "orgvid")
+    private Long orgVid;
 
-    /** Kilidin geçerli olduğu kuruluş (boş olabilir). */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "kurvid")
-    private TemorgkurVrl kurulus;
+    /** Kilidin geçerli olduğu kuruluşun vid'i (temorgkur; boş olabilir). */
+    @Column(name = "kurvid")
+    private Long kurVid;
 
-    /** Kilidin geçerli olduğu tesis (boş olabilir). Üçünden en az biri dolu olmalıdır. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tesvid")
-    private TemorgtesVrl tesis;
+    /** Kilidin geçerli olduğu tesisin vid'i (temorgtes; boş olabilir). Üçünden en az biri dolu olmalıdır. */
+    @Column(name = "tesvid")
+    private Long tesVid;
 
     /** Hangi işlem türünün kilitli olduğu (satış, teslimat, ödeme...); değerler sonra tanımlanır. */
     @Column(name = "bloketipi", nullable = false)
@@ -82,34 +75,34 @@ public class TemorgblkVrl extends TemortPasifVrl {
         this.kayitVid = kayitVid;
     }
 
-    /** Kilidin geçerli olduğu organizasyon (boş olabilir). */
-    public TemorgorgVrl getOrganizasyon() {
-        return organizasyon;
+    /** Kilidin geçerli olduğu organizasyonun vid'i (temorgorg; boş olabilir). */
+    public Long getOrgVid() {
+        return orgVid;
     }
 
-    /** Kilidin geçerli olduğu organizasyon (boş olabilir). */
-    public void setOrganizasyon(TemorgorgVrl organizasyon) {
-        this.organizasyon = organizasyon;
+    /** Kilidin geçerli olduğu organizasyonun vid'i (temorgorg; boş olabilir). */
+    public void setOrgVid(Long orgVid) {
+        this.orgVid = orgVid;
     }
 
-    /** Kilidin geçerli olduğu kuruluş (boş olabilir). */
-    public TemorgkurVrl getKurulus() {
-        return kurulus;
+    /** Kilidin geçerli olduğu kuruluşun vid'i (temorgkur; boş olabilir). */
+    public Long getKurVid() {
+        return kurVid;
     }
 
-    /** Kilidin geçerli olduğu kuruluş (boş olabilir). */
-    public void setKurulus(TemorgkurVrl kurulus) {
-        this.kurulus = kurulus;
+    /** Kilidin geçerli olduğu kuruluşun vid'i (temorgkur; boş olabilir). */
+    public void setKurVid(Long kurVid) {
+        this.kurVid = kurVid;
     }
 
-    /** Kilidin geçerli olduğu tesis (boş olabilir). Üçünden en az biri dolu olmalıdır. */
-    public TemorgtesVrl getTesis() {
-        return tesis;
+    /** Kilidin geçerli olduğu tesisin vid'i (temorgtes; boş olabilir). Üçünden en az biri dolu olmalıdır. */
+    public Long getTesVid() {
+        return tesVid;
     }
 
-    /** Kilidin geçerli olduğu tesis (boş olabilir). Üçünden en az biri dolu olmalıdır. */
-    public void setTesis(TemorgtesVrl tesis) {
-        this.tesis = tesis;
+    /** Kilidin geçerli olduğu tesisin vid'i (temorgtes; boş olabilir). Üçünden en az biri dolu olmalıdır. */
+    public void setTesVid(Long tesVid) {
+        this.tesVid = tesVid;
     }
 
     /** Hangi işlem türünün kilitli olduğu (satış, teslimat, ödeme...); değerler sonra tanımlanır. */

@@ -1,8 +1,8 @@
--- temorgblk : Tablo genel bloke tanımları (tüm modüller için ortak kilit kaydı).
+-- temortblk : Tablo genel bloke tanımları (tüm modüller için ortak kilit kaydı).
 -- Neden var: bir kartın (muhatap, ürün vb.) belirli bir organizasyon/kuruluş/tesis kırılımında,
 -- belirli bir tarih aralığında belirli işlem türüne (satış, teslimat, ödeme...) kapatılabilmesi için.
 -- tablokodu + kayitvid birlikte hedef kartı gösterir (polimorfik bağ; yabancı anahtar YOKTUR).
-CREATE TABLE temorgblk (
+CREATE TABLE temortblk (
     vid            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tablokodu      VARCHAR(10)  NOT NULL,   -- bloke edilen kartın tablo kodu (örn. mhtlevmuf)
     kayitvid       BIGINT       NOT NULL,   -- o tablodaki kartın vid'i
@@ -25,13 +25,13 @@ CREATE TABLE temorgblk (
     u_kullanici    VARCHAR(30),
     u_tarih        DATE,
     u_saat         TIME,
-    CONSTRAINT temorgblk_tablokodu_ck CHECK (btrim(tablokodu) <> ''),
-    CONSTRAINT temorgblk_bloketipi_ck CHECK (bloketipi > 0),
-    CONSTRAINT temorgblk_tarih_ck CHECK (bitistarihi IS NULL OR bitistarihi > baslangictarihi),
+    CONSTRAINT temortblk_tablokodu_ck CHECK (btrim(tablokodu) <> ''),
+    CONSTRAINT temortblk_bloketipi_ck CHECK (bloketipi > 0),
+    CONSTRAINT temortblk_tarih_ck CHECK (bitistarihi IS NULL OR bitistarihi > baslangictarihi),
     -- Kırılım: organizasyon, kuruluş, tesis alanlarından en az biri dolu olmalı
-    CONSTRAINT temorgblk_kirilim_ck CHECK (orgvid IS NOT NULL OR kurvid IS NOT NULL OR tesvid IS NOT NULL),
-    CONSTRAINT temorgblk_pasif_ck CHECK (
+    CONSTRAINT temortblk_kirilim_ck CHECK (orgvid IS NOT NULL OR kurvid IS NOT NULL OR tesvid IS NOT NULL),
+    CONSTRAINT temortblk_pasif_ck CHECK (
         (pasif AND pasiftarihi IS NOT NULL AND pasifnedeni IS NOT NULL)
         OR (NOT pasif AND pasiftarihi IS NULL AND pasifnedeni IS NULL))
 );
-CREATE INDEX temorgblk_kayit_ix ON temorgblk (tablokodu, kayitvid);
+CREATE INDEX temortblk_kayit_ix ON temortblk (tablokodu, kayitvid);
