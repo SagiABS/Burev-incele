@@ -35,6 +35,10 @@ public class TemorgmimrEntity extends TemortPasifEntity {
     @Column(name = "tanimi", length = 200)
     private String tanimi;
 
+    /** Kaydın ne işe yaradığı ve hakkında önemli bilgi açıklamaları. */
+    @Column(name = "islevi", length = 1000)
+    private String islevi;
+
     /** Kaydın türü: MODUL, PAKET, KLASOR, TABLO, ENTITY, REPOSITORY, SERVICE, VIEW, DIALOG, CONTROLLER, DTO, VALIDATOR, EVENT, TEST. */
     @Column(name = "terim", length = 20, nullable = false)
     private String terim;
@@ -81,6 +85,16 @@ public class TemorgmimrEntity extends TemortPasifEntity {
     /** Türkçe tanım. */
     public void setTanimi(String tanimi) {
         this.tanimi = tanimi;
+    }
+
+    /** İşlev ve önemli bilgi açıklamaları. */
+    public String getIslevi() {
+        return islevi;
+    }
+
+    /** İşlev ve önemli bilgi açıklamaları. */
+    public void setIslevi(String islevi) {
+        this.islevi = islevi;
     }
 
     /** Kaydın türü. */

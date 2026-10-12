@@ -9,6 +9,7 @@ CREATE TABLE temorgmimr (
     sira           INTEGER      NOT NULL,   -- aynı üst kayıt altındaki sıralama
     adi            VARCHAR(60)  NOT NULL,   -- teknik ad (örn. temorgtes, TemorgtesView)
     tanimi         VARCHAR(200),            -- Türkçe tanım (örn. Tesis Tanımla)
+    islevi         VARCHAR(1000),           -- kaydın işlevi ve önemli bilgi açıklamaları
     terim          VARCHAR(20)  NOT NULL,   -- kaydın türü
     siskod         VARCHAR(20)  NOT NULL,   -- sistematik kod (menü/arama kodu)
     -- Pasif yapma bilgisi: üçü birlikte dolu (pasif) ya da üçü birlikte boş (aktif) olmalı
