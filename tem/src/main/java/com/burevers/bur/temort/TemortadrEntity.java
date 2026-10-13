@@ -81,7 +81,7 @@ public class TemortadrEntity extends TemortPasifEntity {
     @Column(name = "boylam", precision = 11, scale = 8)
     private BigDecimal boylam;
 
-    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temorgmde.alanadi. */
+    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temcusmde.alanadi. */
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ekbilgiler")
     private Map<String, Object> ekBilgiler;
@@ -231,12 +231,12 @@ public class TemortadrEntity extends TemortPasifEntity {
         this.boylam = boylam;
     }
 
-    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temorgmde.alanadi. */
+    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temcusmde.alanadi. */
     public Map<String, Object> getEkBilgiler() {
         return ekBilgiler;
     }
 
-    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temorgmde.alanadi. */
+    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temcusmde.alanadi. */
     public void setEkBilgiler(Map<String, Object> ekBilgiler) {
         this.ekBilgiler = ekBilgiler;
     }

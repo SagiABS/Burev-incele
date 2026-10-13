@@ -2,16 +2,20 @@
 -- Neden var: Yapı Mimarı Excel'inin veritabanı karşılığıdır; menü kısa kodunun (siskod) ve uygulama içi
 -- belgelemenin kaynağıdır. Kayıtlar Flyway göçleriyle (tohum veri) eklenir; kodla senkronu mimari testle denetlenir.
 -- Hiyerarşi: modül > paket > tablo > sınıf (ustvid ile).
--- siskod: <modül 3 harf>_<ebced>_<sıra>; sıra 000 = tablonun/paketin kendisi, 001... = sınıfları.
+-- siskod: <modül 3 harf>_<ebced>_<sıra 3 hane>; ebced ve sıra değerlerini kullanıcı verir.
+-- ana / tali / detay: modül, paket grubu ve tablo adı bölümleri (örn. mht / lev / muf = mhtlevmuf).
 CREATE TABLE temorgmimr (
     vid            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     ustvid         BIGINT       REFERENCES temorgmimr (vid),   -- üst kayıt (modülde boş)
-    sira           INTEGER      NOT NULL,   -- aynı üst kayıt altındaki sıralama
+    sira           INTEGER      NOT NULL,   -- sıralama kodu (örn. 201010)
+    ana            VARCHAR(3),              -- modül kodu (örn. mht)
+    tali           VARCHAR(3),              -- paket kodunun grup bölümü (örn. lev)
+    detay          VARCHAR(4),              -- tablo adı bölümü (örn. muf, blok)
     adi            VARCHAR(60)  NOT NULL,   -- teknik ad (örn. temorgtes, TemorgtesView)
     tanimi         VARCHAR(200),            -- Türkçe tanım (örn. Tesis Tanımla)
     islevi         VARCHAR(1000),           -- kaydın işlevi ve önemli bilgi açıklamaları
     terim          VARCHAR(20)  NOT NULL,   -- kaydın türü
-    siskod         VARCHAR(20)  NOT NULL,   -- sistematik kod (menü/arama kodu)
+    siskod         VARCHAR(20),             -- sistematik kod (menü/arama kodu); ebced gelene kadar boş olabilir
     -- Pasif yapma bilgisi: üçü birlikte dolu (pasif) ya da üçü birlikte boş (aktif) olmalı
     pasif          BOOLEAN      NOT NULL DEFAULT FALSE,
     pasiftarihi    DATE,

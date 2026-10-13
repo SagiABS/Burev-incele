@@ -6,14 +6,14 @@ import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 
 /**
- * TemortblkEntity - temortblk tablosunun JPA sınıfı (varlık).
+ * TemortblokEntity - temortblok tablosunun JPA sınıfı (varlık).
  * Ne işe yarar: tüm modüller için ortak bloke (kilit) kaydı; tablokodu + kayitvid hedef kartı gösterir (yabancı anahtar yok).
  * Neden var: veritabanı satırını Java nesnesi olarak okuyup yazabilmek için.
  * Not: ortak alanlar (vid, pasif, oluşturma/güncelleme izi) üst sınıflardan gelir.
  */
 @Entity
-@Table(name = "temortblk")
-public class TemortblkEntity extends TemortPasifEntity {
+@Table(name = "temortblok")
+public class TemortblokEntity extends TemortPasifEntity {
 
     /** Bloke edilen kartın tablo kodu (örn. mhtlevmuf). */
     @Column(name = "tablokodu", length = 10, nullable = false)

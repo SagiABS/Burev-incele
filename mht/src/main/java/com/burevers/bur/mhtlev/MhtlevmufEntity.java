@@ -55,7 +55,7 @@ public class MhtlevmufEntity extends TemortPasifEntity {
     @Column(name = "logourl", length = 500)
     private String logoUrl;
 
-    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temorgmde.alanadi. */
+    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temcusmde.alanadi. */
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ekbilgiler")
     private Map<String, Object> ekBilgiler;
@@ -140,12 +140,12 @@ public class MhtlevmufEntity extends TemortPasifEntity {
         this.logoUrl = logoUrl;
     }
 
-    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temorgmde.alanadi. */
+    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temcusmde.alanadi. */
     public Map<String, Object> getEkBilgiler() {
         return ekBilgiler;
     }
 
-    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temorgmde.alanadi. */
+    /** Yönetici tanımlı ek alanlar (JSONB); anahtarlar temcusmde.alanadi. */
     public void setEkBilgiler(Map<String, Object> ekBilgiler) {
         this.ekBilgiler = ekBilgiler;
     }

@@ -23,9 +23,21 @@ public class TemorgmimrEntity extends TemortPasifEntity {
     @JoinColumn(name = "ustvid")
     private TemorgmimrEntity ust;
 
-    /** Aynı üst kayıt altındaki sıralama. */
+    /** Sıralama kodu (örn. 201010). */
     @Column(name = "sira", nullable = false)
     private Integer sira;
+
+    /** Ana bölüm: modül kodu (örn. mht). */
+    @Column(name = "ana", length = 3)
+    private String ana;
+
+    /** Tali bölüm: paket kodunun grup bölümü (örn. lev). */
+    @Column(name = "tali", length = 3)
+    private String tali;
+
+    /** Detay bölüm: tablo adı bölümü (örn. muf, blok). */
+    @Column(name = "detay", length = 4)
+    private String detay;
 
     /** Teknik ad (örn. temorgtes, TemorgtesView). */
     @Column(name = "adi", length = 60, nullable = false)
@@ -43,8 +55,8 @@ public class TemorgmimrEntity extends TemortPasifEntity {
     @Column(name = "terim", length = 20, nullable = false)
     private String terim;
 
-    /** Sistematik kod: modül_ebced_sıra (örn. tem_893_000); menü/arama kodudur, benzersizdir. */
-    @Column(name = "siskod", length = 20, nullable = false)
+    /** Sistematik kod: modül_ebced_sıra (örn. tem_893_001); menü/arama kodudur, benzersizdir; ebced gelene kadar boş olabilir. */
+    @Column(name = "siskod", length = 20)
     private String siskod;
 
     /** Üst kayıt. */
@@ -65,6 +77,36 @@ public class TemorgmimrEntity extends TemortPasifEntity {
     /** Sıra. */
     public void setSira(Integer sira) {
         this.sira = sira;
+    }
+
+    /** Ana bölüm (modül kodu). */
+    public String getAna() {
+        return ana;
+    }
+
+    /** Ana bölüm (modül kodu). */
+    public void setAna(String ana) {
+        this.ana = ana;
+    }
+
+    /** Tali bölüm (paket grubu). */
+    public String getTali() {
+        return tali;
+    }
+
+    /** Tali bölüm (paket grubu). */
+    public void setTali(String tali) {
+        this.tali = tali;
+    }
+
+    /** Detay bölüm (tablo adı bölümü). */
+    public String getDetay() {
+        return detay;
+    }
+
+    /** Detay bölüm (tablo adı bölümü). */
+    public void setDetay(String detay) {
+        this.detay = detay;
     }
 
     /** Teknik ad. */

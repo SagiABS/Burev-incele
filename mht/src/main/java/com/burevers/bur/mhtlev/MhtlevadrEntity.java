@@ -10,14 +10,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * MhtlevmfaEntity - mhtlevmfa tablosunun JPA sınıfı (varlık).
+ * MhtlevadrEntity - mhtlevadr tablosunun JPA sınıfı (varlık).
  * Ne işe yarar: muhatap - adres ilişkisi; bir adres birden çok muhatapça ortak kullanılabilir.
  * Neden var: veritabanı satırını Java nesnesi olarak okuyup yazabilmek için.
  * Not: ortak alanlar (vid, pasif, oluşturma/güncelleme izi) üst sınıflardan gelir.
  */
 @Entity
-@Table(name = "mhtlevmfa")
-public class MhtlevmfaEntity extends TemortPasifEntity {
+@Table(name = "mhtlevadr")
+public class MhtlevadrEntity extends TemortPasifEntity {
 
     /** Adresin bağlandığı muhatap. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

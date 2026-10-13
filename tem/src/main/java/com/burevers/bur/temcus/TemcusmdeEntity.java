@@ -1,5 +1,8 @@
-package com.burevers.bur.temorg;
+package com.burevers.bur.temcus;
 
+import com.burevers.bur.temorg.TemorgkurEntity;
+import com.burevers.bur.temorg.TemorgorgEntity;
+import com.burevers.bur.temorg.TemorgtesEntity;
 import com.burevers.bur.temort.TemortPasifEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,14 +12,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * TemorgmdeEntity - temorgmde tablosunun JPA sınıfı (varlık).
+ * TemcusmdeEntity - temcusmde tablosunun JPA sınıfı (varlık).
  * Ne işe yarar: organizasyon ek alan tanımı: bir tabloya yöneticinin eklediği dinamik alanın adı, başlığı, türü, zorunluluğu ve geçerlilik kapsamı (organizasyon / kuruluş / tesis).
  * Neden var: veritabanı satırını Java nesnesi olarak okuyup yazabilmek için.
  * Not: ortak alanlar (vid, pasif, oluşturma/güncelleme izi) üst sınıflardan gelir.
  */
 @Entity
-@Table(name = "temorgmde")
-public class TemorgmdeEntity extends TemortPasifEntity {
+@Table(name = "temcusmde")
+public class TemcusmdeEntity extends TemortPasifEntity {
 
     /** Ek alanın ekleneceği tablo kodu. */
     @Column(name = "tablokodu", length = 10, nullable = false)
