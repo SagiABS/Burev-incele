@@ -55,7 +55,7 @@ public class TemorgmimrEntity extends TemortPasifEntity {
     @Column(name = "terim", length = 20, nullable = false)
     private String terim;
 
-    /** Sistematik kod: modül_ebced_sıra (örn. tem_893_001); menü/arama kodudur, benzersizdir; ebced gelene kadar boş olabilir. */
+    /** Sistematik kod: modül_ebced_sıra (örn. tem_893_001); menü/arama kodudur, benzersizdir; modül ve paket kayıtlarında boştur, tablo ve sınıf kayıtlarında zorunludur. */
     @Column(name = "siskod", length = 20)
     private String siskod;
 
