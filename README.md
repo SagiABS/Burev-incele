@@ -35,8 +35,8 @@ Yeni modüller (bel, muh, mht) sırası gelince eklenir. Java paketleri modül a
 
 ## Paket kodu dili
 - **Paket kodu 6 karakter:** modül(3) + grup(3), örn. `temorg`. Java paketi = paket kodu: `com.burevers.bur.temorg`.
-- **Tablo kodu 9 karakter:** paket kodu(6) + ad(3), örn. `temorgorg`. Tüm tablolarda anahtar `vid` (bigserial).
-- **Sınıf adı ekleri:** `Vrl` (varlık), `Rep` (repository), `Srv` (servis), `Vie` (Vaadin görünümü), `Uc` (REST).
+- **Tablo kodu en çok 10 karakter:** paket kodu(6) + ad(3 veya 4), örn. `temorgtes`, `temorgmimr`. Tablo adı ve entity sınıf adı bu koddan türer. Tüm tablolarda anahtar `vid` (IDENTITY).
+- **Sınıf adı = tablo kodu (baş harfi büyük) + standart sonek:** `Entity`, `Repository`, `Service`, `View`, `Dialog`, `Controller`, `Dto`, `Validator`, `Event` (örn. `TemorgtesEntity`, `TemorgtesView`).
 - Kodların anlamı Excel'deki "Sözlük" sayfasındadır (tek kaynak: `1_Burevers_Yapı_Mimar.xlsx`).
 
 ## Kurallar (otomatik denetlenir: `testler/mimari-testler`)
@@ -44,6 +44,7 @@ Yeni modüller (bel, muh, mht) sırası gelince eklenir. Java paketleri modül a
 - Bağımlılık yönü: `tem` ← `bel` ← `muh`, `tem` ← `mht`; başka modüller arası bağımlılık yasak.
 - Paketler arasında döngü yok; paket kodu 6 karakter dilinde olmalı.
 - Alan enjeksiyonu yasak; paket ve sınıf adları ASCII.
+- Her `@Entity`: tablo adı geçerli tablo koduna uyar, sınıf adı = tablo kodu + `Entity`, paket = tablo kodunun ilk 6 karakteri; paketlerdeki her sınıf izin verilen sonekle biter.
 
 ## Kodlama kuralları
 - Her sınıf ve metodun başında Türkçe açıklama (Javadoc); zor satırlara Türkçe satır içi yorum.
