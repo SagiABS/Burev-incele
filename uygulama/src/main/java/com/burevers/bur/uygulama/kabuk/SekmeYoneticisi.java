@@ -74,7 +74,7 @@ public class SekmeYoneticisi extends VerticalLayout {
 
     /** Başlık + kapatma düğmesi olan sekmeyi üretir. */
     private Tab sekmeOlustur(String siskod, String baslik) {
-        Button kapat = new Button(VaadinIcon.CLOSE_SMALL.create());
+        Button kapat = new Button(VaadinIcon.CLOSE.create());
         kapat.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE, ButtonVariant.LUMO_SMALL);
         kapat.getElement().setAttribute("aria-label", baslik + " sekmesini kapat");
         HorizontalLayout etiket = new HorizontalLayout(new Span(baslik), kapat);
