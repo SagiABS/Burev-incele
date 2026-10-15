@@ -33,5 +33,17 @@
             <groupId>com.burevers</groupId>
             <artifactId>burever-cekirdek</artifactId>
         </dependency>
+
+        <!-- Yalnızca test bağımlılıkları (BOM ile sürümleri Spring Boot'tan gelir) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

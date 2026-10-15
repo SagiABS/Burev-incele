@@ -24,7 +24,7 @@ import java.util.Locale;
  *
  * <p>Neden var: Tüm ekranlar bu kabuğun içinde sekme olarak açılır. Sol menüde işlem arama kutusu,
  * açılır/kapanır gruplar ve en altta kapat / yardım / uyarı / mesaj düğmeleri bulunur.
- * Menü {@link MenuSaglayicisi}'ndan, düğme yetkileri {@link YetkiSaglayicisi}'ndan gelir.
+ * Menü {@link MenuSaglayicisi}'ndan gelir; tıklanan adımın ekranını {@link EkranFabrikasi} veritabanındaki düzenden üretir.
  * Bu sınıf eski karşılama sayfasının ({@code GirisView}) yerini alır; gerçek giriş sonra gelecektir.
  */
 @Route("")
@@ -34,14 +34,14 @@ public class AnaSayfaView extends AppLayout {
     private static final Locale TR = Locale.forLanguageTag("tr");
 
     private final MenuSaglayicisi menuSaglayicisi;
-    private final YetkiSaglayicisi yetkiSaglayicisi;
+    private final EkranFabrikasi ekranFabrikasi;
     private final SekmeYoneticisi sekmeler = new SekmeYoneticisi();
     private final VerticalLayout menuAlani = new VerticalLayout();
 
     /** Bağımlılıklar kurucudan alınır (alan enjeksiyonu yasaktır). */
-    public AnaSayfaView(MenuSaglayicisi menuSaglayicisi, YetkiSaglayicisi yetkiSaglayicisi) {
+    public AnaSayfaView(MenuSaglayicisi menuSaglayicisi, EkranFabrikasi ekranFabrikasi) {
         this.menuSaglayicisi = menuSaglayicisi;
-        this.yetkiSaglayicisi = yetkiSaglayicisi;
+        this.ekranFabrikasi = ekranFabrikasi;
 
         setPrimarySection(Section.DRAWER);
         addToNavbar(new DrawerToggle(), new H1("Burever"));
@@ -94,7 +94,7 @@ public class AnaSayfaView extends AppLayout {
             d.setWidthFull();
             d.getStyle().set("justify-content", "flex-start");
             d.addClickListener(olay -> sekmeler.ac(ogesi.siskod(), ogesi.baslik(),
-                    () -> new ListeSablonu(ogesi.siskod(), ogesi.baslik(), yetkiSaglayicisi)));
+                    () -> ekranFabrikasi.olustur(ogesi.siskod(), ogesi.baslik())));
             return d;
         }
         List<Component> cocuklar = new ArrayList<>();
