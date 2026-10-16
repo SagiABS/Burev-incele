@@ -1,0 +1,15 @@
+# Kanıt çalışması (Vue) ayarları. Şifre dosyaya YAZILMAZ: BUREVER_DB_SIFRE ortam değişkeni.
+server:
+  port: 8081
+spring:
+  datasource:
+    url: ${BUREVER_DB_URL:jdbc:postgresql://localhost:5432/dburevers}
+    username: ${BUREVER_DB_KULLANICI:dburtest}
+    password: ${BUREVER_DB_SIFRE}
+  # Veritabanı ana uygulamayla zaten göç edilmiş olmalı; bu uygulama göç çalıştırmaz.
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false

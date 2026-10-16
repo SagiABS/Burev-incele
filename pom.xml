@@ -143,4 +143,14 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Kanıt çalışması: mvn -Ppoc ... ile açılır. Varsayılan derlemeye GİRMEZ (poc/README.md) -->
+        <profile>
+            <id>poc</id>
+            <modules>
+                <module>poc</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

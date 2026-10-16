@@ -1,0 +1,139 @@
+<!doctype html>
+<!--
+  Kanıt çalışması (Vue adayı): tek dosyalık ekran.
+  Ne yapar: /api/ekran/{siskod} ile düzeni alır, ızgarayı o düzene göre çizer; sıralama ve sayfalama sunucuda;
+  dil seçici (Arapçada sağdan sola); sürüklenebilir alt panel.
+  Neden tek dosya: derleme adımı (Node) olmadan denenebilsin. Gerçek projede Vite + TypeScript kullanılır.
+  Not: Vue, jsdelivr CDN'inden yüklenir (tarayıcıda internet gerekir).
+-->
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burever - Vue kanıtı</title>
+<style>
+  :root { --mavi:#1e3a8a; --acik:#eff3fb; --cizgi:#d7deec; --metin:#1f2937; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.4 system-ui, sans-serif; color:var(--metin); background:#f6f8fc; }
+  #uygulama { display:grid; grid-template-columns: 220px 1fr; height:100vh; }
+  aside { background:var(--mavi); color:#fff; padding:12px; }
+  aside h1 { font-size:16px; margin:0 0 16px; }
+  aside a { display:block; padding:8px 10px; border-radius:6px; color:#dbe4ff; text-decoration:none; }
+  aside a.secili { background:rgba(255,255,255,.18); color:#fff; }
+  main { display:flex; flex-direction:column; min-width:0; }
+  header { display:flex; align-items:center; gap:12px; padding:10px 16px; background:#fff; border-bottom:1px solid var(--cizgi); }
+  header h2 { margin:0; font-size:16px; flex:1; }
+  select, button { font:inherit; padding:5px 10px; border:1px solid var(--cizgi); border-radius:6px; background:#fff; cursor:pointer; }
+  button:hover { background:var(--acik); }
+  .govde { flex:1; display:flex; flex-direction:column; min-height:0; padding:12px 16px; }
+  .panel { background:#fff; border:1px solid var(--cizgi); border-radius:8px; display:flex; flex-direction:column; min-height:80px; overflow:hidden; }
+  .panel-ust { display:flex; justify-content:space-between; padding:8px 12px; border-bottom:1px solid var(--cizgi); background:var(--acik); font-weight:600; }
+  .tablo-kap { overflow:auto; flex:1; }
+  table { border-collapse:collapse; width:100%; }
+  th, td { padding:7px 12px; text-align:start; white-space:nowrap; border-bottom:1px solid #eef1f7; }
+  th { position:sticky; top:0; background:#fff; cursor:default; user-select:none; }
+  th.siralanir { cursor:pointer; } th.siralanir:hover { background:var(--acik); }
+  tbody tr:hover { background:var(--acik); }
+  .tutac { height:8px; margin:4px 0; cursor:row-resize; background:var(--cizgi); border-radius:4px; }
+  .tutac:hover { background:#9db0dd; }
+  footer { display:flex; gap:10px; align-items:center; padding:6px 12px; border-top:1px solid var(--cizgi); }
+</style>
+</head>
+<body>
+<div id="uygulama">
+  <aside>
+    <h1>Burever</h1>
+    <a href="#" class="secili">{{ ekran ? ekran.baslik : '…' }}</a>
+  </aside>
+  <main>
+    <header>
+      <h2>{{ ekran ? ekran.baslik : '' }}</h2>
+      <label>{{ metin('dil.secim', 'Dil') }}
+        <select v-model="dil" @change="dilDegistir">
+          <option v-for="d in diller" :key="d.kodu" :value="d.kodu">{{ d.yerelAd }}</option>
+        </select>
+      </label>
+      <button @click="yukle">{{ metin('dugme.yenile', 'Yenile') }}</button>
+      <button @click="altAcik = !altAcik">{{ metin('dugme.altpanel', 'Alt panel') }}</button>
+    </header>
+    <div class="govde" v-if="ekran">
+      <section class="panel" :style="{ flex: '1 1 0' }">
+        <div class="panel-ust"><span>{{ izgara.baslik }}</span><span>{{ metin('liste.toplamkayit', 'Toplam kayıt') }}: {{ toplam }}</span></div>
+        <div class="tablo-kap">
+          <table>
+            <thead><tr>
+              <th v-for="k in izgara.kolonlar" :key="k.alan" :class="{ siralanir: k.siralanabilir }" @click="sirala(k)">
+                {{ k.etiket }}<span v-if="siralaAlan === k.alan"> {{ artan ? '▲' : '▼' }}</span>
+              </th>
+            </tr></thead>
+            <tbody><tr v-for="s in satirlar" :key="s.vid"><td v-for="k in izgara.kolonlar" :key="k.alan">{{ s[k.alan] }}</td></tr></tbody>
+          </table>
+        </div>
+        <footer>
+          <button :disabled="baslangic === 0" @click="git(-1)">‹</button>
+          <span>{{ baslangic + 1 }}–{{ Math.min(baslangic + ADET, toplam) }} / {{ toplam }}</span>
+          <button :disabled="baslangic + ADET >= toplam" @click="git(1)">›</button>
+        </footer>
+      </section>
+      <template v-if="altAcik">
+        <div class="tutac" @pointerdown="surukle"></div>
+        <section class="panel" :style="{ flex: '0 0 ' + altYukseklik + 'px' }">
+          <div class="panel-ust"><span>{{ metin('dugme.altpanel', 'Alt panel') }}</span></div>
+          <div style="padding:12px">…</div>
+        </section>
+      </template>
+    </div>
+  </main>
+</div>
+<script type="module">
+import { createApp, ref, computed, onMounted } from 'https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js';
+
+createApp({
+  setup() {
+    const ADET = 50;                                   // sayfa başına satır
+    const siskod = new URLSearchParams(location.search).get('ekran') || 'tem_893_000';
+    const diller = ref([]), dil = ref('tr'), ekran = ref(null);
+    const satirlar = ref([]), toplam = ref(0), baslangic = ref(0);
+    const siralaAlan = ref(null), artan = ref(true);
+    const altAcik = ref(true), altYukseklik = ref(180);
+
+    const izgara = computed(() => ekran.value?.bolumler.find(b => b.turu === 'GRID') ?? { kolonlar: [], baslik: '' });
+    const metin = (anahtar, yedek) => ekran.value?.metin[anahtar] ?? yedek;
+
+    async function ekraniYukle() {
+      ekran.value = await (await fetch(`/api/ekran/${siskod}?dil=${dil.value}`)).json();
+      document.documentElement.dir = ekran.value.yon;  // Arapçada sağdan sola
+      document.documentElement.lang = dil.value;
+    }
+    async function veriyiYukle() {
+      const q = new URLSearchParams({ baslangic: baslangic.value, adet: ADET, artan: artan.value });
+      if (siralaAlan.value) q.set('sirala', siralaAlan.value);
+      const c = await (await fetch(`/api/veri/${siskod}/${izgara.value.kodu}?${q}`)).json();
+      satirlar.value = c.satirlar; toplam.value = c.toplam;
+    }
+    async function yukle() { await ekraniYukle(); await veriyiYukle(); }
+    async function dilDegistir() { await ekraniYukle(); }   // yalnızca etiketler değişir, veri yeniden çekilmez
+    function sirala(k) {
+      if (!k.siralanabilir) return;
+      artan.value = siralaAlan.value === k.alan ? !artan.value : true;
+      siralaAlan.value = k.alan; baslangic.value = 0; veriyiYukle();
+    }
+    function git(yon) { baslangic.value = Math.max(0, baslangic.value + yon * ADET); veriyiYukle(); }
+    function surukle(olay) {                            // alt paneli sürükleyerek yeniden boyutlandırır
+      const y0 = olay.clientY, h0 = altYukseklik.value;
+      const tasi = e => { altYukseklik.value = Math.max(80, h0 + (y0 - e.clientY)); };
+      const birak = () => { removeEventListener('pointermove', tasi); removeEventListener('pointerup', birak); };
+      addEventListener('pointermove', tasi); addEventListener('pointerup', birak);
+    }
+    onMounted(async () => {
+      diller.value = await (await fetch('/api/diller')).json();
+      dil.value = diller.value.find(d => d.varsayilan)?.kodu ?? 'tr';
+      await yukle();
+    });
+    return { ADET, diller, dil, ekran, satirlar, toplam, baslangic, siralaAlan, artan, altAcik, altYukseklik,
+             izgara, metin, yukle, dilDegistir, sirala, git, surukle };
+  }
+}).mount('#uygulama');
+</script>
+</body>
+</html>
