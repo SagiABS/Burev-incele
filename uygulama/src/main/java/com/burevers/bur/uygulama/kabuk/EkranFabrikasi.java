@@ -1,5 +1,6 @@
 package com.burevers.bur.uygulama.kabuk;
 
+import com.burevers.bur.temdil.TemdilcvrService.Cozucu;
 import com.burevers.bur.temekr.TemekrduzenDto;
 import com.burevers.bur.temekr.TemekrduzenService;
 import com.burevers.bur.temekr.TemekrkapsamDto;
@@ -38,24 +39,27 @@ public class EkranFabrikasi {
     /**
      * Ekranı üretir.
      *
-     * @param siskod ekranın sistem kodu
-     * @param baslik menüde görünen ad (düzen bulunamazsa uyarıda kullanılır)
+     * @param siskod   ekranın sistem kodu
+     * @param baslik   menüde görünen ad (düzen bulunamazsa uyarıda kullanılır)
+     * @param metinler seçili dil için metin çözücü (mesajlar ve ekran yazıları buradan gelir)
      */
-    public com.vaadin.flow.component.Component olustur(String siskod, String baslik) {
+    public com.vaadin.flow.component.Component olustur(String siskod, String baslik, Cozucu metinler) {
         Optional<TemekrduzenDto> duzen;
         try {
             duzen = duzenler.duzenGetir(siskod, VARSAYILAN_VARYANT, TemekrkapsamDto.sistem());
         } catch (RuntimeException hata) {
             // Veritabanı hatası ayrıntısı kullanıcıya gösterilmez; sunucu günlüğüne yazılır
             GUNLUK.error("Ekran düzeni okunamadı: {}", siskod, hata);
-            return mesajEkrani("'" + baslik + "' ekranı açılamadı. Ayrıntı sunucu günlüğündedir.");
+            return mesajEkrani("'" + baslik + "' "
+                    + metinler.metin("ekranı açılamadı. Ayrıntı sunucu günlüğündedir.", "mesaj.ekranacilamadi"));
         }
         if (duzen.isEmpty()) {
-            return mesajEkrani("'" + baslik + "' (" + siskod + ") için yayınlanmış bir ekran düzeni yok.");
+            return mesajEkrani("'" + baslik + "' (" + siskod + ") "
+                    + metinler.metin("için yayınlanmış bir ekran düzeni yok.", "mesaj.duzenyok"));
         }
         TemekrduzenDto d = duzen.get();
         if ("LISTE".equals(d.sablon())) {
-            return new ListeSablonu(d, veriler, yetki);
+            return new ListeSablonu(d, veriler, yetki, metinler);
         }
         return mesajEkrani("'" + d.baslik() + "' için " + d.sablon() + " şablonu henüz hazır değil.");
     }

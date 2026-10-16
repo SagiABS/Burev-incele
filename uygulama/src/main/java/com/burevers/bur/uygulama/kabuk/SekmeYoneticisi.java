@@ -1,5 +1,6 @@
 package com.burevers.bur.uygulama.kabuk;
 
+import com.burevers.bur.temdil.TemdilcvrService.Cozucu;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -27,14 +28,16 @@ public class SekmeYoneticisi extends VerticalLayout {
     /** Aynı anda açık olabilecek en çok sekme sayısı. */
     public static final int EN_COK_SEKME = 10;
 
+    private final Cozucu metinler;
     private final Tabs sekmeler = new Tabs();
     private final Div icerik = new Div();
     /** Açık ekranlar: siskod → sekme (ekleme sırası korunur). */
     private final Map<String, Tab> acikSekmeler = new LinkedHashMap<>();
     private final Map<Tab, Component> sekmeIcerikleri = new LinkedHashMap<>();
 
-    /** Boş bir sekme alanı oluşturur. */
-    public SekmeYoneticisi() {
+    /** Boş bir sekme alanı oluşturur; mesajlar verilen metin çözücüyle (dile göre) yazılır. */
+    public SekmeYoneticisi(Cozucu metinler) {
+        this.metinler = metinler;
         setSizeFull();
         setPadding(false);
         setSpacing(false);
@@ -59,7 +62,7 @@ public class SekmeYoneticisi extends VerticalLayout {
             return;
         }
         if (acikSekmeler.size() >= EN_COK_SEKME) {
-            Mesaj.uyari("En çok " + EN_COK_SEKME + " sekme açılabilir; önce birini kapatın.");
+            Mesaj.uyari(metinler.bicimli("mesaj.ensekme", "En çok {0} sekme açılabilir; önce birini kapatın.", EN_COK_SEKME));
             return;
         }
         Component govde = ekran.get();
@@ -74,7 +77,7 @@ public class SekmeYoneticisi extends VerticalLayout {
 
     /** Başlık + kapatma düğmesi olan sekmeyi üretir. */
     private Tab sekmeOlustur(String siskod, String baslik) {
-        Button kapat = new Button(VaadinIcon.CLOSE_SMALL.create());
+        Button kapat = new Button(VaadinIcon.CLOSE.create());
         kapat.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE, ButtonVariant.LUMO_SMALL);
         kapat.getElement().setAttribute("aria-label", baslik + " sekmesini kapat");
         HorizontalLayout etiket = new HorizontalLayout(new Span(baslik), kapat);
