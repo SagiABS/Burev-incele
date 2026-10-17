@@ -1,0 +1,35 @@
+/*
+ * Burever ön yüz genel stili.
+ * Neden var: kabuğun (sol menü, üst çubuk, içerik) yerleşimi ve küçük ayarlar. Bileşenlerin kendi görünümü
+ * PrimeVue temasından gelir. Yön (sağdan sola) için "margin-left" yerine mantıksal özellikler
+ * (inline-start/end) kullanılır; böylece Arapçada yerleşim kendiliğinden aynalanır.
+ */
+html, body, #uygulama { height: 100%; margin: 0; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; background: #f4f6fb; color: #1f2937; }
+
+.bur-kabuk { display: grid; grid-template-columns: 240px 1fr; height: 100%; }
+.bur-sol { background: #1e3a8a; color: #fff; padding: 16px 12px; overflow: auto; }
+.bur-sol h1 { font-size: 18px; margin: 0 0 18px; padding-inline-start: 8px; }
+.bur-menu-oge { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px;
+  background: transparent; color: #dbe4ff; font: inherit; text-align: start; cursor: pointer; }
+.bur-menu-oge:hover { background: rgba(255, 255, 255, .12); }
+.bur-menu-oge.secili { background: rgba(255, 255, 255, .22); color: #fff; }
+
+.bur-sag { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.bur-ust { display: flex; align-items: center; gap: 12px; padding: 10px 18px; background: #fff; border-bottom: 1px solid #d7deec; }
+.bur-ust h2 { margin: 0; font-size: 16px; flex: 1; }
+.bur-icerik { flex: 1; min-height: 0; padding: 14px 18px; }
+
+.bur-liste { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.bur-arac { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; }
+.bur-arac .bur-bosluk { flex: 1; }
+.bur-panel { height: 100%; background: #fff; border: 1px solid #d7deec; border-radius: 8px; padding: 12px; overflow: auto; }
+.bur-uyari { padding: 12px 14px; margin-bottom: 10px; background: #fff4e5; border: 1px solid #f5c98b; border-radius: 8px; }
+
+.bur-form { max-width: 640px; background: #fff; border: 1px solid #d7deec; border-radius: 8px; padding: 18px; }
+.bur-form pre { background: #f4f6fb; border-radius: 6px; padding: 10px; overflow: auto; }
+/* JSON Forms (vanilla) çıktısının hafif düzeltmesi */
+.bur-form .control { margin-bottom: 14px; }
+.bur-form .control label { display: block; font-weight: 600; margin-bottom: 4px; }
+.bur-form .control input { width: 100%; padding: 8px 10px; border: 1px solid #c3cde3; border-radius: 6px; font: inherit; box-sizing: border-box; }
+.bur-form .error { color: #b42318; font-size: 12px; }

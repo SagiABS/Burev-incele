@@ -10,17 +10,21 @@ target/
 .project
 .settings/
 
-# Vaadin ön yüz (otomatik üretilen)
+# Node bağımlılıkları (her yerde) ve ön yüz derleme çıktısı
 node_modules/
 node/
-frontend/generated/
-vite.generated.ts
-vite.config.ts
-package.json
-package-lock.json
-tsconfig.json
-types.d.ts
-src/main/bundles/
+web/dist/
+
+# Vaadin ön yüz (otomatik üretilen; yalnızca uygulama modülünde. web/ klasöründeki
+# package.json, vite.config.ts, tsconfig.json ve package-lock.json depoya EKLENİR)
+/uygulama/frontend/generated/
+/uygulama/vite.generated.ts
+/uygulama/vite.config.ts
+/uygulama/package.json
+/uygulama/package-lock.json
+/uygulama/tsconfig.json
+/uygulama/types.d.ts
+/uygulama/src/main/bundles/
 
 # Yerel gizli ayarlar (depoya eklenmez)
 ops/.env
