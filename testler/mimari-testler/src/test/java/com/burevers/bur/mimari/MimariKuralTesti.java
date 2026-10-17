@@ -208,7 +208,7 @@ class MimariKuralTesti {
             public void check(JavaClass sinif, ConditionEvents olaylar) {
                 String onEk = MimariSabitleri.KOK_PAKET + ".";
                 String paket = sinif.getPackageName();
-                if (!paket.startsWith(onEk) || sinif.isNestedClass() || sinif.isAnonymous()) {
+                if (!paket.startsWith(onEk) || sinif.isNestedClass() || sinif.isAnonymousClass()) {
                     return;
                 }
                 String ilkParca = paket.substring(onEk.length());
