@@ -4,7 +4,7 @@ ADR-23: Vue 3 + TypeScript + PrimeVue + JSON Forms; sunucu durumsuz REST API. Ek
 `temekr*` düzeninden çizilir (kendi ince çizicimiz); düzenleme formları JSON Forms ile.
 
 ## Önkoşul
-- Node.js 22 LTS (https://nodejs.org). Kontrol: `node -v` ve `npm -v`.
+- Node.js 22 LTS veya 24 LTS (https://nodejs.org). Kontrol: `node -v` ve `npm -v`. (24 LTS ile deneme yapılması önerilir; sorun çıkarsa çıktıyı paylaşın.)
 
 ## Çalıştırma (geliştirme)
 1. API sunucusunu başlatın. Şimdilik `PocVueUygulamasi` (port 8081, parola `BUREVER_DB_SIFRE` ortam değişkeniyle).

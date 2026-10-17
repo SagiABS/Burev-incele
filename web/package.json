@@ -1,6 +1,7 @@
 {
   "name": "burever-web",
   "private": true,
+  "engines": { "node": ">=22" },
   "version": "0.1.0",
   "description": "Burever ERP ön yüzü: Vue 3 + PrimeVue + JSON Forms (ADR-23). Sunucu durumsuz REST API'dir.",
   "type": "module",
