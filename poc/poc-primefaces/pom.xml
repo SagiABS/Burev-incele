@@ -50,6 +50,8 @@
         <dependency>
             <groupId>org.joinfaces</groupId>
             <artifactId>primefaces-spring-boot-starter</artifactId>
+            <!-- Starter sürümü BOM'dan gelmiyor (Maven hatası: version is missing); açıkça verilir -->
+            <version>${joinfaces.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
