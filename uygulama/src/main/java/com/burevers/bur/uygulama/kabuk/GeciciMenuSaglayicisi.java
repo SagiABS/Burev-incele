@@ -17,11 +17,11 @@ public class GeciciMenuSaglayicisi implements MenuSaglayicisi {
     @Override
     public List<MenuOgesi> menuAgaci() {
         return List.of(
-                MenuOgesi.grup("tem-yapi", "Organizasyon Yapısı", VaadinIcon.BUILDING,
+                MenuOgesi.grup("tem_yapi", "Organizasyon Yapısı", VaadinIcon.BUILDING,
                         MenuOgesi.islem("temorgorg", "Organizasyonlar", "tem_893_000"),
                         MenuOgesi.islem("temorgkur", "Kuruluşlar", "tem_973_000"),
                         MenuOgesi.islem("temorgtes", "Tesisler", "tem_1128_000")),
-                MenuOgesi.grup("tem-kullanici", "Kullanıcı ve Yetki", VaadinIcon.USERS,
+                MenuOgesi.grup("tem_kullanici", "Kullanıcı ve Yetki", VaadinIcon.USERS,
                         MenuOgesi.islem("temkultan", "Kullanıcılar", "tem_1028_000"),
                         MenuOgesi.islem("temkulrol", "Roller", "tem_813_000"),
                         MenuOgesi.islem("temkulizn", "İzinler", "tem_644_000")),

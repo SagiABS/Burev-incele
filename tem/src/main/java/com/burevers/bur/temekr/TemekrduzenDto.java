@@ -30,7 +30,10 @@ public record TemekrduzenDto(Long ekranVid, String siskod, String varyant, Strin
         }
     }
 
-    /** Tablo (GRID) bölümündeki bir kolon; alan bilgisi veri sözlüğünden (temcusdba) gelir. */
+    /**
+     * Tablo (GRID) bölümündeki bir kolon; alan bilgisi veri sözlüğünden (temcusdba) gelir.
+     * {@code etiket} boşsa başlık dile göre çeviri tablosundan (temdilcvr) çözülür; doluysa ekrana özel sabit etiketdir.
+     */
     public record Kolon(String alanAdi, String veriTipi, String kaynak, String etiket, Integer genislik,
                         String bicim, String toplam, boolean siralanabilir, boolean filtrelenebilir,
                         boolean gorunur) {

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+  Kanıt çalışması (PrimeFaces adayı): Organizasyonlar liste ekranı.
+  Ne yapar: temekr düzeninden gelen kolonları p:columns ile dinamik çizer; satırlar tembel yüklenir
+  (sayfalama/sıralama sunucuda); dil seçici etiketleri değiştirir; p:splitter ile sürüklenebilir alt panel.
+  Not: Sayfa http://localhost:8082/ekran.xhtml?ekran=tem_893_000 adresinde açılır.
+  DOĞRULANMADI: p:splitter ve p:columns özellik adları kullanılan PrimeFaces sürümünde farklı olabilir.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+<h:head>
+    <title>Burever - PrimeFaces kanıtı</title>
+    <style>
+        body { margin: 0; font-family: system-ui, sans-serif; background: #f6f8fc; }
+        .ust { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #d7deec; }
+        .ust h2 { margin: 0; font-size: 16px; flex: 1; }
+        .govde { padding: 12px 16px; height: calc(100vh - 60px); }
+    </style>
+</h:head>
+<h:body>
+    <h:form id="form">
+        <!-- Yön: Arapçada rtl; dil değişince tüm form yeniden çizilir -->
+        <h:panelGroup id="kap" layout="block" style="direction: #{ekranBean.yon}">
+            <div class="ust">
+                <h2>#{ekranBean.baslik}</h2>
+                <p:selectOneMenu value="#{ekranBean.dilKodu}">
+                    <p:ajax listener="#{ekranBean.dilDegisti}" update="form:kap"/>
+                    <f:selectItems value="#{ekranBean.diller}" var="d" itemValue="#{d.kodu}" itemLabel="#{d.yerelAd}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="govde">
+                <p:splitter layout="vertical" style="height: 100%">
+                    <p:splitterPanel size="75" minSize="20">
+                        <p:dataTable id="izgara" var="satir" value="#{ekranBean.model}" lazy="true"
+                                     rows="50" paginator="true" rowKey="#{satir.vid}"
+                                     scrollable="true" scrollHeight="flex" stripedRows="true"
+                                     paginatorPosition="bottom">
+                            <p:columns value="#{ekranBean.kolonlar}" var="kolon"
+                                       headerText="#{kolon.etiket}"
+                                       sortBy="#{satir[kolon.alan]}" sortable="#{kolon.siralanabilir}">
+                                <h:outputText value="#{satir[kolon.alan]}"/>
+                            </p:columns>
+                        </p:dataTable>
+                    </p:splitterPanel>
+                    <p:splitterPanel size="25" minSize="10">
+                        <div style="padding: 12px">…</div>
+                    </p:splitterPanel>
+                </p:splitter>
+            </div>
+        </h:panelGroup>
+    </h:form>
+</h:body>
+</html>

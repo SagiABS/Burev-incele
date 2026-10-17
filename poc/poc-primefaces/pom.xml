@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  poc-primefaces: Aday 2 - Spring Boot + JoinFaces + PrimeFaces (JSF).
+  Amaç: (1) Spring Boot 4.1 / Java 25 ile uyumu görmek, (2) aynı düzenle dinamik kolonlu, tembel yüklemeli
+  tabloyu kurmanın zorluğunu ölçmek, (3) 1000 oturumda bellek kullanımını Vue adayıyla karşılaştırmak.
+
+  UYARI: JoinFaces sürümünün Spring Boot 4.1 ile uyumu DOĞRULANMADI. Bu modül derlenmezse/açılmazsa,
+  sonuç zaten kanıtın bir parçasıdır: hata çıktısını gönderin.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.burevers</groupId>
+        <artifactId>burever-poc</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>burever-poc-primefaces</artifactId>
+    <name>Burever - Kanıt: PrimeFaces</name>
+
+    <properties>
+        <!-- Merkez depoda görülen son sürüm; Boot 4.1 uyumu denenmeden bilinmiyor -->
+        <joinfaces.version>6.1.1</joinfaces.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.joinfaces</groupId>
+                <artifactId>joinfaces-dependencies</artifactId>
+                <version>${joinfaces.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.burevers</groupId>
+            <artifactId>burever-tem</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <!-- JSF (Mojarra varsayılan) + PrimeFaces; sürümleri JoinFaces BOM'u belirler -->
+        <dependency>
+            <groupId>org.joinfaces</groupId>
+            <artifactId>primefaces-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

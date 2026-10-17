@@ -1,0 +1,25 @@
+# Kanıt çalışması (PrimeFaces) ayarları. Şifre dosyaya YAZILMAZ: BUREVER_DB_SIFRE ortam değişkeni.
+server:
+  port: 8082
+spring:
+  datasource:
+    url: ${BUREVER_DB_URL:jdbc:postgresql://localhost:5432/dburevers}
+    username: ${BUREVER_DB_KULLANICI:dburtest}
+    password: ${BUREVER_DB_SIFRE}
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+
+joinfaces:
+  faces:
+    # Görünüm durumu SUNUCUDA tutulur (istemciye serileştirilmiş durum gönderilmez); güvenlik ilk kuralı.
+    state-saving-method: server
+    project-stage: production
+  # Mojarra: oturum başına tutulan görünüm sayısı. Düşük tutmak bellek kullanımını azaltır (geri düğmesi sınırlanır).
+  # DOĞRULANMADI: özellik adı yanlışsa sessizce yok sayılır; açılış günlüğünde/ölçümde etkisine bakın.
+  mojarra:
+    number-of-views-in-session: 5
+    number-of-logical-views: 5

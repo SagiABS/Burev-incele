@@ -103,8 +103,9 @@ public class TemekrduzenService {
             if ("GRID".equals(b.getTuru())) {
                 for (TemekrkolEntity k : kolonlar.findAktifByBolum(b.getVid())) {
                     TemcusdbaEntity alan = k.getAlan();
-                    // Etiket verilmemişse alan adı gösterilir; çok dilli etiket sözlükten (temorgsozl) sonra gelecek
-                    String etiket = k.getEtiket() != null ? k.getEtiket() : alan.getAlanAdi();
+                    // Etiket boş bırakılırsa arayüz onu çeviri tablosundan (temdilcvr) dile göre çözer;
+                    // dolu ise o ekrana özel sabit etiket kullanılır
+                    String etiket = k.getEtiket();
                     kolonListesi.add(new TemekrduzenDto.Kolon(alan.getAlanAdi(), alan.getVeriTipi(),
                             alan.getKaynak(), etiket, k.getGenislik() == null ? null : k.getGenislik().intValue(),
                             k.getBicim(), k.getToplam(), k.isSiralanabilir(), k.isFiltrelenebilir(), k.isGorunur()));
